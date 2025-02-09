@@ -26,6 +26,8 @@ jobs:
           MYSQL_COLLATION: utf8mb4_unicode_ci
           MYSQL_CHARACTER_SET_SERVER: utf8mb4
           MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
+          MYSQL_INIT_CONNECT: 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci'
+          MYSQL_SQL_MODE: 'NO_ENGINE_SUBSTITUTION'
         ports:
           - 3306:3306
         options: >-
