@@ -1,3 +1,8 @@
+-- 创建数据库
+CREATE DATABASE IF NOT EXISTS device_management CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE device_management;
+
 -- 创建部门表
 CREATE TABLE IF NOT EXISTS departments (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -8,7 +13,6 @@ CREATE TABLE IF NOT EXISTS departments (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 -- 创建设备表
 CREATE TABLE IF NOT EXISTS devices (
