@@ -27,7 +27,7 @@ on:
 env:
   REGION_ID: cn-hangzhou
   REGISTRY: registry.cn-hangzhou.aliyuncs.com
-  NAMESPACE: devicemanagement
+  NAMESPACE: namespace
   IMAGE: device-management
   TAG: ${{ github.sha }}
   ACK_CLUSTER_ID: clusterID
