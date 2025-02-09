@@ -24,6 +24,8 @@ jobs:
           MYSQL_DATABASE: device_management
           MYSQL_CHARSET: utf8mb4
           MYSQL_COLLATION: utf8mb4_unicode_ci
+          MYSQL_CHARACTER_SET_SERVER: utf8mb4
+          MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
         ports:
           - 3306:3306
         options: >-
@@ -31,8 +33,6 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
-          --character-set-server=utf8mb4
-          --collation-server=utf8mb4_unicode_ci
     steps:
     - uses: actions/checkout@v4
 
