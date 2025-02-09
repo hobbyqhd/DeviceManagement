@@ -58,6 +58,10 @@ jobs:
         region-id: "${{ env.REGION_ID }}"
         access-key-id: "${{ secrets.ACCESS_KEY_ID }}"
         access-key-secret: "${{ secrets.ACCESS_KEY_SECRET }}"
+        instance-id: "${{ env.ACR_EE_INSTANCE_ID }}"
+        registry: "${{ env.REGISTRY }}"
+        namespace: "${{ env.NAMESPACE }}"
+
 
     # 1.2 Build and push image to ACR
     - name: Build and push image to ACR
