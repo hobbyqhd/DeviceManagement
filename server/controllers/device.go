@@ -101,31 +101,8 @@ func GetDeviceTypes(c *gin.Context) {
 // GetDeviceStats 获取设备统计信息
 func GetDeviceStats(c *gin.Context) {
 	// 从数据库获取各类设备统计数据
-	var stats struct {
-		Total       int64 `json:"total"`
-		Online      int64 `json:"online"`
-		Maintenance int64 `json:"maintenance"`
-		Purchasing  int64 `json:"purchasing"`
-	}
-
-	// 获取设备总数
-	database.DB.Model(&models.Device{}).Count(&stats.Total)
-
-	// 获取在线设备数（使用中和闲置状态）
-	database.DB.Model(&models.Device{}).Where("status IN (?)", []string{"使用中", "闲置"}).Count(&stats.Online)
-
-	// 获取维修中设备数
-	database.DB.Model(&models.Device{}).Where("status = ?", "维修中").Count(&stats.Maintenance)
-
-	// 获取待采购设备数
-	database.DB.Model(&models.Device{}).Where("status = ?", "待采购").Count(&stats.Purchasing)
-
-	// 获取设备状态分布
-	var statusStats []struct {
-		Status string `json:"status"`
-		Count  int    `json:"count"`
-	}
-	database.DB.Model(&models.Device{}).Select("status, count(*) as count").Group("status").Scan(&statusStats)
+	var total int64
+	database.DB.Model(&models.Device{}).Count(&total)
 
 	// 获取设备类型分布
 	var typeStats []struct {
@@ -134,12 +111,24 @@ func GetDeviceStats(c *gin.Context) {
 	}
 	database.DB.Model(&models.Device{}).Select("type, count(*) as count").Group("type").Scan(&typeStats)
 
+	// 获取设备状态分布
+	var statusStats []struct {
+		Status string `json:"status"`
+		Count  int    `json:"count"`
+	}
+	database.DB.Model(&models.Device{}).Select("status, count(*) as count").Group("status").Scan(&statusStats)
+
+	// 获取部门设备分布
+	var departmentStats []struct {
+		Department string `json:"department"`
+		Count      int    `json:"count"`
+	}
+	database.DB.Model(&models.Device{}).Select("department_code as department, count(*) as count").Group("department_code").Scan(&departmentStats)
+
 	c.JSON(http.StatusOK, gin.H{
-		"total_devices":       stats.Total,
-		"online_devices":      stats.Online,
-		"maintenance_devices": stats.Maintenance,
-		"purchasing_devices":  stats.Purchasing,
-		"status_stats":        statusStats,
-		"type_stats":          typeStats,
+		"total":         total,
+		"by_type":       typeStats,
+		"by_status":     statusStats,
+		"by_department": departmentStats,
 	})
 }
