@@ -23,7 +23,7 @@ jobs:
 
     - name: Initialize Go Module
       run: |
-        go mod init deviceManagement
+        go mod init device-management
         go mod tidy
 
     - name: Build
