@@ -19,6 +19,44 @@ func init() {
 	}
 }
 
+func setupRouter() *gin.Engine {
+	// 创建路由
+	r := gin.Default()
+
+	// 设置CORS中间件
+	r.Use(func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+		c.Next()
+	})
+
+	// API路由
+	api := r.Group("/api")
+	{
+		// 设备相关路由
+		api.GET("/devices", controllers.GetDevices)
+		api.GET("/devices/:code", controllers.GetDevice)
+		api.POST("/devices", controllers.CreateDevice)
+		api.PUT("/devices/:code", controllers.UpdateDevice)
+		api.DELETE("/devices/:code", controllers.DeleteDevice)
+
+		// 部门相关路由
+		api.GET("/departments", controllers.GetDepartments)
+		api.POST("/departments", controllers.CreateDepartment)
+
+		// 其他路由
+		api.GET("/stats", controllers.GetDeviceStats)
+		api.GET("/device-types", controllers.GetDeviceTypes)
+	}
+
+	return r
+}
+
 func main() {
 	// 初始化数据库连接
 	database.InitDB()
@@ -27,7 +65,7 @@ func main() {
 	gin.SetMode(viper.GetString("server.mode"))
 
 	// 创建路由
-	r := gin.Default()
+	r := setupRouter()
 
 	// 设置CORS中间件
 	r.Use(func(c *gin.Context) {
