@@ -27,13 +27,15 @@ on:
 env:
   REGION_ID: cn-hangzhou
   REGISTRY: registry.cn-hangzhou.aliyuncs.com
-  NAMESPACE: devicemanagement
-  IMAGE: device-management
+  NAMESPACE: device-management
+  IMAGE: device-management-server
+  ACR_EE_NAMESPACE: device-management
+  ACR_EE_IMAGE: device-management-server
   TAG: ${{ github.sha }}
   ACK_CLUSTER_ID: clusterID
   ACK_DEPLOYMENT_NAME: device-management
 
-  ACR_EE_REGISTRY: myregistry.cn-hangzhou.cr.aliyuncs.com
+  ACR_EE_REGISTRY: registry.cn-hangzhou.cr.aliyuncs.com
   ACR_EE_INSTANCE_ID: instanceID
   ACR_EE_NAMESPACE: devicemanagement
   ACR_EE_IMAGE: repo
