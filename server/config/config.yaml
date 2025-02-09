@@ -1,0 +1,14 @@
+server:
+  port: 8080
+  mode: debug
+
+database:
+  driver: mysql
+  host: localhost
+  port: 3306
+  username: root
+  password: 123456
+  dbname: device_management
+  charset: utf8mb4
+  parseTime: "true"
+  loc: Local
